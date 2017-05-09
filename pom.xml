@@ -41,6 +41,23 @@
             <scope>test</scope>
         </dependency>
 
+        <dependency>
+            <groupId>com.formulasearchengine</groupId>
+            <artifactId>mathmlsim</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>javax.validation</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+
+            </exclusions>
+        </dependency>
+
         <!-- Webutilities (Tomcat, MVC AutoConfig ... -->
         <!--<dependency>-->
             <!--<groupId>org.springframework.boot</groupId>-->
