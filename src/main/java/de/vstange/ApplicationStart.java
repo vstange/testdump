@@ -5,6 +5,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 /**
+ * Just simple start up class for the spring boot environment.
+ * Why spring boot? I just wanted a simple db/hibernate setup.
+ *
  * @author Vincent Stange
  */
 @SpringBootApplication

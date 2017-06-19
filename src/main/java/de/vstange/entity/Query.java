@@ -1,5 +1,8 @@
 package de.vstange.entity;
 
+import com.formulasearchengine.mathmltools.mml.CMMLInfo;
+import net.sf.saxon.s9api.XQueryExecutable;
+
 /**
  * TODO
  *
@@ -12,6 +15,14 @@ public class Query {
     private String queryFormulaId;
 
     private String mathml;
+
+    private CMMLInfo cmmlInfo;
+
+    private XQueryExecutable query;
+
+    private XQueryExecutable abstractQuery;
+
+    private XQueryExecutable dataQuery;
 
     public Integer getQueryNum() {
         return queryNum;
@@ -35,5 +46,37 @@ public class Query {
 
     public void setMathml(String mathml) {
         this.mathml = mathml;
+    }
+
+    public XQueryExecutable getQuery() {
+        return query;
+    }
+
+    public void setQuery(XQueryExecutable query) {
+        this.query = query;
+    }
+
+    public XQueryExecutable getAbstractQuery() {
+        return abstractQuery;
+    }
+
+    public void setAbstractQuery(XQueryExecutable abstractQuery) {
+        this.abstractQuery = abstractQuery;
+    }
+
+    public CMMLInfo getCmmlInfo() {
+        return cmmlInfo;
+    }
+
+    public void setCmmlInfo(CMMLInfo cmmlInfo) {
+        this.cmmlInfo = cmmlInfo;
+    }
+
+    public void setDataQuery(XQueryExecutable dataQuery) {
+        this.dataQuery = dataQuery;
+    }
+
+    public XQueryExecutable getDataQuery() {
+        return dataQuery;
     }
 }

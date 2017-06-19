@@ -56,7 +56,7 @@ public class QueryCollect {
         collectTopics(textinput);
 
         for (String topic : topics) {
-            Document document = XMLHelper.String2Doc(topic, false);
+            Document document = XMLHelper.string2Doc(topic, false);
             String topicNum = getTopicNum(document);
             NodeList formulas = getFormulas(document);
             for (int i = 0; i < formulas.getLength(); i++) {
