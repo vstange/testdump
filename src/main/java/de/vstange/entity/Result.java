@@ -9,7 +9,7 @@ import java.sql.Timestamp;
  * @author Vincent Stange
  */
 @Entity
-@Table(name = "results",
+@Table(name = "results_query",
         uniqueConstraints = {
                 @UniqueConstraint(columnNames = {"querynum", "queryformulaid", "patternname", "pageid"})
         })
