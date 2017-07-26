@@ -1,15 +1,17 @@
 package de.vstange.entity;
 
+import de.vstange.runner.TestRunner;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 
 /**
- * TODO
+ * Hibernate wrapper for the result table entries.
  *
  * @author Vincent Stange
  */
 @Entity
-@Table(name = "results_query",
+@Table(name = TestRunner.RESULT_TABLE_NAME,
         uniqueConstraints = {
                 @UniqueConstraint(columnNames = {"querynum", "queryformulaid", "patternname", "pageid"})
         })

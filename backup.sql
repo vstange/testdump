@@ -1,1 +1,0 @@
-CREATE TABLE results_bkp AS SELECT * FROM results;

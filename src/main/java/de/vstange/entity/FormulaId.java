@@ -3,7 +3,8 @@ package de.vstange.entity;
 import java.io.Serializable;
 
 /**
- * TODO
+ * Separate class to declare for hibernate a unique Id for
+ * the formula table.
  *
  * @author Vincent Stange
  */

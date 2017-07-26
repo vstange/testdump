@@ -10,7 +10,8 @@ import java.util.stream.Stream;
 import static org.hibernate.jpa.QueryHints.HINT_FETCH_SIZE;
 
 /**
- * TODO
+ * Standard JPA repository for results. Additionally Provides a streaming
+ * function and a filter method.
  *
  * @author Vincent Stange
  */
@@ -26,4 +27,5 @@ public interface FormulaRepository extends JpaRepository<Formula, String> {
     @org.springframework.data.jpa.repository.Query(value = "select t from Formula t")
     Stream<Formula> streamAll();
 
+    Formula findByNameAndSectionname(String name, String sectionname);
 }

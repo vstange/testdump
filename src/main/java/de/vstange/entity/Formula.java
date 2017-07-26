@@ -1,12 +1,11 @@
 package de.vstange.entity;
 
 import com.formulasearchengine.mathmltools.mml.CMMLInfo;
-import net.sf.saxon.s9api.XQueryExecutable;
 
 import javax.persistence.*;
 
 /**
- * TODO
+ * Hibernate wrapper for the formula table entries.
  *
  * @author Vincent Stange
  */

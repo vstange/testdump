@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * TODO
+ * Collects all queries from the specified XML document.
  *
  * @author Vincent Stange
  */
@@ -25,23 +25,27 @@ public class QueryCollect {
 
     private static final String END = "</topic>";
 
-    List<String> topics = new ArrayList<>();
+    private List<String> topics = new ArrayList<>();
 
-    List<Query> queries = new ArrayList<>();
+    private List<Query> queries = new ArrayList<>();
 
     private XPath xpath = XMLHelper.namespaceAwareXpath("m", CMMLInfo.NS_MATHML);
 
-    public QueryCollect() {
+    /**
+     * To avoid namespace handling and to make it a bit more efficient, this is a linear
+     * text search for topics inside a provided XML document.
+     *
+     * @param xmlInput specific query document as a String
+     * @return List of all topics as Strings
+     */
+    private List<String> collectTopics(String xmlInput) {
         topics.clear();
-    }
-
-    public List<String> collectTopics(String textinput) {
-        int startIdx = textinput.indexOf(START);
-        for (; startIdx != -1; startIdx = textinput.indexOf(START, startIdx + 1)) {
-            int endIdx = textinput.indexOf(END, startIdx + 1);
+        int startIdx = xmlInput.indexOf(START);
+        for (; startIdx != -1; startIdx = xmlInput.indexOf(START, startIdx + 1)) {
+            int endIdx = xmlInput.indexOf(END, startIdx + 1);
 
             if (endIdx != -1) {
-                String topic = textinput.substring(startIdx, endIdx + END.length());
+                String topic = xmlInput.substring(startIdx, endIdx + END.length());
                 topic = topic.replace("<topic>", //"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
                         "<topic xmlns:m=\"http://www.w3.org/1998/Math/MathML\">");
                 topics.add(topic);
@@ -52,9 +56,17 @@ public class QueryCollect {
         return topics;
     }
 
-    public List<Query> getQueries(String textinput) {
-        collectTopics(textinput);
-
+    /**
+     * Get all queries contained inside the specified XML document.
+     *
+     * @param xmlInput specific query document as a String
+     * @return list of all queries
+     */
+    public List<Query> getQueries(String xmlInput) {
+        // clear previous collection
+        queries.clear();
+        collectTopics(xmlInput);
+        // each topic can contain multiple queries
         for (String topic : topics) {
             Document document = XMLHelper.string2Doc(topic, false);
             String topicNum = getTopicNum(document);
@@ -64,52 +76,42 @@ public class QueryCollect {
                 String attrId = formulaNode.getAttribute("id");
                 try {
                     Node mathChild = getMath(formulaNode);
-                    String mathml = XMLUtils.nodeToString(mathChild).trim();
-
-                    // clean up mathml
-//                    mathml = mathml.replaceAll("xml:", "");
-//                    mathml = mathml.replaceAll("m:", "");
-//                    mathml = mathml.replaceAll("xmlns:m", "xmlns");
-
+                    String mathml = XMLUtils.nodeToString(mathChild, true).trim();
+                    // set each one up as a query object
                     Query query = new Query();
                     query.setQueryNum(Integer.valueOf(topicNum.split("-")[2]));
                     query.setQueryFormulaId(attrId);
                     query.setMathml(mathml);
                     queries.add(query);
                 } catch (Exception e) {
-                    throw new RuntimeException("blub", e);
+                    throw new RuntimeException("xml to string transformation failed", e);
                 }
             }
-
         }
         return queries;
     }
 
-    public String getTopicNum(Document document) {
+    private String getTopicNum(Document document) {
         try {
             return (String) xpath.compile("/topic/num").evaluate(document, XPathConstants.STRING);
         } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+            throw new RuntimeException("xpath extraction failed", e);
         }
     }
 
-    public NodeList getFormulas(Document document) {
+    private NodeList getFormulas(Document document) {
         try {
             return (NodeList) xpath.compile("//formula").evaluate(document, XPathConstants.NODESET);
         } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+            throw new RuntimeException("xpath extraction failed", e);
         }
     }
 
-    public Node getMath(Node formula) {
+    private Node getMath(Node formulaNode) {
         try {
-            return (Node) xpath.compile("//m:math").evaluate(formula, XPathConstants.NODE);
+            return (Node) xpath.evaluate("./*[1]", formulaNode, XPathConstants.NODE);
         } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+            throw new RuntimeException("xpath extraction failed", e);
         }
     }
-
 }

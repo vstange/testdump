@@ -4,7 +4,7 @@ import com.formulasearchengine.mathmltools.mml.CMMLInfo;
 import net.sf.saxon.s9api.XQueryExecutable;
 
 /**
- * TODO
+ * Hibernate wrapper for the result table entries.
  *
  * @author Vincent Stange
  */
@@ -18,11 +18,21 @@ public class Query {
 
     private CMMLInfo cmmlInfo;
 
+    /**
+     * cached query of the unchanged document
+     */
     private XQueryExecutable query;
 
+    /**
+     * cached query of the strict document
+     */
     private XQueryExecutable abstractQuery;
 
+    /**
+     * cached query of the data abstract document
+     */
     private XQueryExecutable dataQuery;
+
 
     public Integer getQueryNum() {
         return queryNum;

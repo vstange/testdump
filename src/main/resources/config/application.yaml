@@ -1,14 +1,13 @@
 spring:
+  # database configuration
   datasource:
     url: jdbc:mysql://127.0.0.1:3306/testdump
     username: vincent
     password:
     driver-class-name: org.mariadb.jdbc.Driver
+  # hibernate specific configuration
   jpa:
     show-sql: false
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
-        #ddl-auto: create-drop
-
-#spring.jpa.hibernate.naming-strategy=org.hibernate.cfg.EJB3NamingStrategy
